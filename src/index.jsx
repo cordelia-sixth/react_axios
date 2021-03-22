@@ -1,29 +1,30 @@
+// jsonplace holderからデータを取得して画面に表示したい
+// async await useState useEffectが必要らしい
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-
 const { useState } = React;
 
-
-// ボタンを押すとgetリクエストを発酵する
-
-const CounterHook = () => {
-
-  const [data, setData] = useState([]);
+const UseAxios = () => {
+  const [data, setDate] = useState([]);
 
   const getRequest = () => {
-    setData((prevData) => prevData = axios.get('https://jsonplaceholder.typicode.com/users'));
+    axios.get('https://jsonplaceholder.typicode.com/users')
+      .then(res => {setDate(res.data)});
   };
 
   return (
-    <>
-      <h1>{data[0]}</h1>
-      <button onClick={getRequest}>click!</button>
-    </>
+    <div>
+      <button onClick={() => getRequest()}>click</button>
+      <ul>
+        {data.map(data => <li>{data.name}</li>)}
+      </ul>
+    </div>
   );
 };
 
 ReactDOM.render(
-  <CounterHook />, 
+  <UseAxios />,
   document.getElementById('root')
 );
